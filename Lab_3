@@ -66,6 +66,8 @@ if count_null_1 > count_null_3:
 else:
     print('Количество нулей в B в области 1 не больше, чем в области 3')
     B, E = E, B
+
+F = [[1 for j in range(N)] for i in range(N)]
 #D
 for i in range(mid):
     for j in range(mid):
