@@ -36,8 +36,6 @@ A = [[random.randint(-10, 10) for i in range(N)] for j in range(N)]
 
 print('Матрица A: ')
 print_matr(A)
-second = 0
-fourth = 0
 D = [[A[i][j] for j in range(mid)] for i in range(mid)]
 E = [[A[i][j] for j in range(mid, N)] for i in range(0, mid)]
 C = [[A[i][j] for j in range(mid)] for i in range(mid, N)]
