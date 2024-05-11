@@ -1,0 +1,119 @@
+#Вариант 1
+#Формируется матрица F следующим образом:
+#если количество нулей в В в области 1 больше, чем в области 3,
+#то поменять в ней симметрично области 2 и 4 местами,
+#иначе В и Е поменять местами несимметрично.
+#При этом матрица А не меняется. После чего вычисляется выражение: A*AT – K * F.
+#Выводятся по мере формирования А, F и все матричные операции последовательно.
+
+#Вид матрицы A:         D E
+#                       C B
+#Вид каждой матрицы D, E, B, C:   4
+#                               3   1
+#                                 2
+import random
+
+def print_matr(m):
+    for i in range(len(m)):
+        for j in range(len(m)):
+            print('{:4d}'.format(m[i][j]), end = '')
+        print()
+
+N = int(input('Введите четное натуральное число N > 5: '))
+while (N % 2 != 0) or (N < 6):
+       print('Число N должно быть четным и больше 5!')
+       N = int(input('Введите число N: '))
+K = int(input('Введите целое число K: '))
+mid = int(N/2)
+count_null_1 = 0
+count_null_3 = 0
+
+A = [[random.randint(-10, 10) for i in range(N)] for j in range(N)]
+#Заполнение матрицы A вручную:
+#for i in range(N):
+#    for j in range(N):
+#        A[i][j] = int(input('Элемент ' + str(i + 1) + ' строки, ' + str(j + 1) + ' столбца: '))
+
+F = A
+print('Матрица A: ')
+print_matr(A)
+second = 0
+fourth = 0
+D = [[A[i][j] for j in range(mid)] for i in range(mid)]
+E = [[A[i][j] for j in range(mid, N)] for i in range(0, mid)]
+C = [[A[i][j] for j in range(mid)] for i in range(mid, N)]
+B = [[A[i][j] for j in range(mid, N)] for i in range(mid, N)]
+#Заполнение подматрицы B вручную:
+#for i in range(mid):
+#    for j in range(mid):
+#        B[i][j] = int(input('Элемент подматрицы \'B\' ' + str(i + 1) + ' строки, ' + str(j + 1) + ' столбца: '))
+
+print('Подматрица B: ')
+print_matr(B)
+for j in range(mid // 2 + 1, mid):
+    for i in range(mid - j, mid - (mid - j)):
+        if B[i][j] == 0:
+            count_null_1 += 1
+for j in range(mid // 2):
+    for i in range(j + 1, mid - (j + 1)):
+        if B[i][j] == 0:
+            count_null_3 += 1
+
+if count_null_1 > count_null_3:
+    print('Количество нулей в B в области 1 больше, чем в области 3')
+    for i in range(mid // 2):
+        for j in range(i + 1, (mid - i) - 1):
+            B[i][j], B[(mid - i) - 1][(mid - j) - 1] = B[(mid - i) - 1][(mid - j) - 1], B[i][j]
+    print('Измененная подматрица B: ')
+    print_matr(B)
+else:
+    print('Количество нулей в B в области 1 не больше, чем в области 3')
+    B, E = E, B
+#D
+for i in range(mid):
+    for j in range(mid):
+        F[i][j] = D[i][j]
+#E
+for i in range(mid):
+    for j in range(mid, N):
+        F[i][j] = E[i][j - (mid)]
+#C
+for i in range(mid, N):
+    for j in range(mid):
+        F[i][j] = C[i - mid][j]
+#B
+for i in range(mid, N):
+    for j in range(mid, N):
+        F[i][j] = B[i - mid][j - mid]
+
+print("Матрица F: ")
+print_matr(F)
+
+AT = [[1 for j in range(N)] for i in range(N)]
+A_AT = [[1 for j in range(N)] for i in range(N)]
+KF = [[1 for j in range(N)] for i in range(N)]
+A_AT_KF = [[1 for j in range(N)] for i in range(N)]
+
+for i in range(N):
+    for j in range(N):
+        AT[i][j] = A[j][i]
+print('Транспонированная матрица A: ')
+print_matr(AT)
+
+for i in range(N):
+    for j in range(N):
+        A_AT[i][j] = A[i][j] * AT[i][j]
+print('Матрица A * AT: ')
+print_matr(A_AT)
+
+for i in range(N):
+    for j in range(N):
+        KF[i][j] = K * F[i][j]
+print('Матрица K * F: ')
+print_matr(KF)
+
+for i in range(N):
+    for j in range(N):
+        A_AT_KF [i][j] = A_AT[i][j] - KF[i][j]
+print('Результат: Матрица A * AT - K * F: ')
+print_matr(A_AT_KF)
