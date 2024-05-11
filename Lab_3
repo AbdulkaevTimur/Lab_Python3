@@ -34,7 +34,6 @@ A = [[random.randint(-10, 10) for i in range(N)] for j in range(N)]
 #    for j in range(N):
 #        A[i][j] = int(input('Элемент ' + str(i + 1) + ' строки, ' + str(j + 1) + ' столбца: '))
 
-F = A
 print('Матрица A: ')
 print_matr(A)
 second = 0
