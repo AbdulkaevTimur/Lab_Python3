@@ -57,7 +57,7 @@ for j in range(mid // 2):
             count_null_3 += 1
 
 if count_null_1 > count_null_3:
-    print('Количество нулей в B в области 1 больше, чем в области 3')
+    print('Количество нулей в подматрице \'B\' в области 1 больше, чем в области 3')
     for i in range(mid // 2):
         for j in range(i + 1, (mid - i) - 1):
             B[i][j], B[(mid - i) - 1][(mid - j) - 1] = B[(mid - i) - 1][(mid - j) - 1], B[i][j]
